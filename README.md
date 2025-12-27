@@ -44,6 +44,7 @@ Company job posting
 <img width="800" height="800" alt="Screenshot 2025-12-27 160242" src="https://github.com/user-attachments/assets/e153d46c-8985-4e95-933f-6cb699c4cbff" />
 
 company jobs list
+
 <img width="800" height="800" alt="Screenshot 2025-12-27 160426" src="https://github.com/user-attachments/assets/408c7cfd-aa11-415b-a5ca-cd1e3bf22c97" />
 
 company students applications
