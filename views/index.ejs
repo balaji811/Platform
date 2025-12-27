@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect - Find Internships & Jobs</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Colorful Gradient Palette */
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --light: #4cc9f0;
+            --bright: #7209b7;
+            --success: #2ec4b6;
+            --warning: #ff9f1c;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header with animated gradient background */
+        header {
+            background: linear-gradient(270deg, var(--primary), var(--secondary), var(--bright));
+            background-size: 600% 600%;
+            animation: gradientMove 15s ease infinite;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #fff, var(--light), var(--accent), #fff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 3s linear infinite;
+        }
+
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            color: white;
+            padding: 0.5rem 1rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        nav ul li a:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--bright));
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Floating particles in hero */
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 2px, transparent 3px);
+            background-size: 50px 50px;
+            animation: floatBg 20s linear infinite;
+        }
+
+        @keyframes floatBg {
+            0% { transform: translate(0,0); }
+            50% { transform: translate(25px, -25px); }
+            100% { transform: translate(0,0); }
+        }
+
+        .hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .cta-button {
+            background: var(--accent);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05) translateY(-3px);
+            box-shadow: 0 5px 20px rgba(247, 37, 133, 0.4);
+        }
+
+        /* Features */
+        .features {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transform: translateY(50px);
+            opacity: 0;
+            transition: all 0.6s ease;
+            border-top: 4px solid transparent;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: white;
+            padding: 3rem 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .footer-column a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">Connect</div>
+        <nav>
+            <ul>
+                 <li><a href="/company/log">Company</a></li>
+                <li><a href="/student/log">Student</a></li>
+              
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1 class="animate__animated animate__fadeInDown">Launch Your Career Today</h1>
+        <p class="animate__animated animate__fadeIn animate__delay-1s">Discover the perfect internships and jobs tailored to your skills and aspirations.</p>
+        <div class="cta-buttons animate__animated animate__fadeInUp animate__delay-2s">
+            <a href="/student/log" class="cta-button">Find Internships</a>
+            <a href="/student/log" class="cta-button" style="background: var(--light); color: black;">Browse Jobs</a>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="feature-grid">
+            <div class="feature-card" style="border-top-color: var(--primary)">
+                <h3>✨ Smart Matching</h3>
+                <p>Our AI-powered system matches you with opportunities that align with your skills, interests, and career goals.</p>
+            </div>
+            <div class="feature-card" style="border-top-color: var(--accent)">
+                <h3>🔍 Verified Listings</h3>
+                <p>Every internship and job posting is carefully vetted to ensure quality and legitimacy.</p>
+            </div>
+            <div class="feature-card" style="border-top-color: var(--success)">
+                <h3>🚀 Career Growth</h3>
+                <p>Access exclusive resources, mentorship programs, and skill-building workshops.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Connect</h3>
+                <p>Bridging the gap between talent and opportunity.</p>
+            </div>
+            <div class="footer-column">
+                <h3>Explore</h3>
+                <a href="/student/log">Internships</a>
+                <a href="/student/log">Jobs</a>
+                <a href="/student/log">Companies</a>
+            
+            </div>
+            <div class="footer-column">
+                <h3>Resources</h3>
+                <a href="/student/log">Resume Builder</a>
+                <a href="/student/log">Recommendations</a>
+               
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll animation for feature cards
+        const cards = document.querySelectorAll('.feature-card');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting){
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.2 });
+
+        cards.forEach(card => observer.observe(card));
+    </script>
+
+</body>
+</html>

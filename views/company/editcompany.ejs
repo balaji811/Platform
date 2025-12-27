@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Company | Connect</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+  <style>
+    :root {
+      --primary: #4361ee;
+      --secondary: #3a0ca3;
+      --accent: #4cc9f0;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --transition: all 0.3s ease;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f5f7fa;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ===== Header ===== */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      background: white;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      animation: fadeInDown 1s ease;
+      z-index: 1000;
+    }
+    header .logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: black;
+    }
+    header .logo svg {
+      stroke-dasharray: 300;
+      stroke-dashoffset: 300;
+      animation: drawLogo 5s ease-in-out infinite;
+    }
+    header .logo-text {
+      margin-left: 10px;
+      background: linear-gradient(to right, black, #444);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: bold;
+    }
+    header nav ul {
+      list-style: none;
+      display: flex;
+      gap: 15px;
+    }
+    header nav ul li a {
+      display: inline-block;
+      color: black;
+      padding: 8px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+    header nav ul li a:hover {
+      background: #333;
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    /* ===== Layout ===== */
+    .layout {
+      display: flex;
+      flex: 1;
+      min-height: calc(100vh - 80px);
+    }
+
+    /* ===== Sidebar ===== */
+    .sidebar {
+      width: 280px;
+      background: white;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      box-shadow: 0 0 20px rgba(0,0,0,0.08);
+    }
+    .nav-section h4 {
+      font-size: 14px;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 16px;
+      letter-spacing: 0.5px;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      color: #444;
+      text-decoration: none;
+      margin-bottom: 6px;
+      transition: all 0.2s;
+    }
+    .nav-item:hover { background: #f0f5ff; color: #2255dd; }
+    .nav-item.active { background: #2255dd; color: white; }
+
+    .profile {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      background: #f9fafc;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,.1);
+    }
+    .profile-info {
+      display: flex;
+      align-items: center;
+    }
+    .profile-info img {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    .profile-info a {
+      font-weight: 500;
+      color: #2255dd;
+      text-decoration: none;
+    }
+    .profile-info a:hover { text-decoration: underline; }
+    .profile .fa-bell {
+      font-size: 18px;
+      color: #FFD700;
+    }
+
+    /* ===== Main Content ===== */
+    main {
+      flex: 1;
+      padding: 30px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      overflow-y: auto;
+    }
+
+    /* ===== Form Styling ===== */
+    form {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      transition: all 0.3s ease;
+      animation: fadeInUp 1s ease;
+    }
+    form:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    }
+    .form-control:focus {
+      border-color: #4facfe;
+      box-shadow: 0 0 8px rgba(0, 242, 254, 0.7);
+      transition: box-shadow 0.3s ease;
+    }
+    .btn-primary {
+      background: linear-gradient(to right, #4facfe, #00f2fe);
+      border: none;
+      padding: 10px 20px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+    }
+
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes drawLogo { 0%{stroke-dashoffset:300;}40%{stroke-dashoffset:0;}60%{stroke-dashoffset:0;}100%{stroke-dashoffset:300;} }
+  </style>
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header>
+    <div class="logo">
+      <svg class="logo-drawing" width="40" height="40" viewBox="0 0 100 100" fill="none">
+        <path d="M10 80 L50 20 L90 80 Z" stroke="black" stroke-width="5" fill="transparent"/>
+      </svg>
+      <span class="logo-text">Connect</span>
+    </div>
+    <nav>
+      <ul>
+           <li><a href="/">Home</a></li>
+        <li><a href="/company/logout">Log Out</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="layout">
+    <!-- ===== Sidebar ===== -->
+    <aside class="sidebar">
+      <div class="nav-section">
+        <h4>Navigation</h4>
+        <a href="/company/postjob" class="nav-item"><i class="fa fa-home"></i> Post-jobs</a>
+        <a href="/company/posted" class="nav-item"><i class="fa fa-briefcase"></i> Posted</a>
+        
+      </div>
+      <div class="nav-section">
+        <h4>Applications</h4>
+        <a href="/company/applications" class="nav-item"><i class="fa fa-paper-plane"></i> Applications</a>
+        <a href="/company/chat_list" class="nav-item"><i class="fa fa-comments"></i> Chats</a>
+      </div>
+      <div class="profile">
+        <div class="profile-info">
+          <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="profile">
+          <a href="/company">PROFILE</a>
+        </div>
+        <i class="fa fa-bell"></i>
+      </div>
+    </aside>
+
+    <!-- ===== Main Content ===== -->
+    <main>
+      <div class="container-box animate__animated animate__fadeInUp">
+        <h1 class="mb-4 text-center" style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px;">Edit Company</h1>
+        <form action="/company/update" method="POST" class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label required-field">Company Name</label>
+            <input type="text" name="company_name" class="form-control" value="<%= company.company_name %>" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Company Website</label>
+            <input type="url" name="company_website" class="form-control" value="<%= company.company_website %>">
+          </div>
+          <div class="col-12">
+            <label class="form-label required-field">Description</label>
+            <textarea name="company_description" class="form-control" required><%= company.company_description %></textarea>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Industry</label>
+            <input type="text" name="industry" class="form-control" value="<%= company.industry %>">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Contact Person</label>
+            <input type="text" name="contact_person" class="form-control" value="<%= company.contact_person %>">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Contact Position</label>
+            <input type="text" name="contact_position" class="form-control" value="<%= company.contact_position %>">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label required-field">Email (cannot be changed)</label>
+            <input type="email" name="email" class="form-control" value="<%= company.email %>" readonly required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label required-field">Password</label>
+            <input type="text" name="password" class="form-control" value="<%= company.password %>" required>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Street Address</label>
+            <input type="text" name="street_address" class="form-control" value="<%= company.street_address %>">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">City</label>
+            <input type="text" name="city" class="form-control" value="<%= company.city %>">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">State</label>
+            <input type="text" name="state" class="form-control" value="<%= company.state %>">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Postal Code</label>
+            <input type="text" name="postal_code" class="form-control" value="<%= company.postal_code %>">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Country</label>
+            <input type="text" name="country" class="form-control" value="<%= company.country %>">
+          </div>
+          <div class="col-12 d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary">Update Company</button>
+            <a href="/company" class="btn btn-primary">Back</a>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

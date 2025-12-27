@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%= job.job_title %> | Job Details</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #4361ee;
+      --secondary: #3a0ca3;
+      --accent: #4cc9f0;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --transition: all 0.3s ease;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background: #f5f7fa;
+      color: var(--dark);
+    }
+
+    /* ===== Header ===== */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      background: white;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      animation: fadeInDown 1s ease;
+      z-index: 1000;
+    }
+    header .logo { display: flex; align-items: center; font-size: 1.5rem; font-weight: bold; color: black; }
+    header .logo svg { stroke-dasharray: 300; stroke-dashoffset: 300; animation: drawLogo 5s ease-in-out infinite; }
+    header .logo-text {
+      margin-left: 8px;
+      background: linear-gradient(to right, black, #444);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: bold;
+      animation: fadeLoop 25s ease-in-out infinite;
+    }
+    header nav ul { list-style: none; display: flex; gap: 12px; }
+    header nav ul li a {
+      color: black;
+      padding: 6px 12px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+    header nav ul li a:hover {
+      background: #333;
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    /* ===== Layout ===== */
+    .layout { display: flex; flex: 1; min-height: calc(100vh - 60px); }
+
+    /* ===== Sidebar ===== */
+    .sidebar {
+      width: 240px;
+      background: white;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      box-shadow: 0 0 15px rgba(0,0,0,0.08);
+    }
+    .nav-section { margin-bottom: 20px; }
+    .nav-section h4 {
+      font-size: 13px;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 6px;
+      color: #444;
+      text-decoration: none;
+      margin-bottom: 6px;
+      transition: all 0.2s;
+      font-size: 14px;
+    }
+    .nav-item:hover { background: #f0f5ff; color: #2255dd; }
+    .nav-item.active { background: #2255dd; color: white; }
+
+    .profile {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      background: #f9fafc;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,.1);
+      font-size: 14px;
+    }
+    .profile-info { display: flex; align-items: center; }
+    .profile-info img { width: 38px; height: 38px; border-radius: 50%; margin-right: 8px; }
+    .profile .fa-bell { font-size: 16px; color: #FFD700; animation: fadeLoop 3s infinite; }
+
+    /* ===== Main Content ===== */
+    main {
+      flex: 1;
+      padding: 30px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      overflow-y: auto;
+    }
+    .job-container {
+      max-width: 1000px;
+      margin: auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      animation: fadeInUp 1s ease;
+    }
+    .section {
+      margin-bottom: 20px;
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+    .section h2 { margin-bottom: 10px; font-size: 18px; color: #2255dd; }
+    .apply-btn {
+      background: #2255dd;
+      color: white;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .apply-btn:hover { background: #1a44bb; }
+    .back-link { display: inline-block; margin-top: 20px; color: #2255dd; text-decoration: none; }
+    .back-link:hover { text-decoration: underline; }
+
+    /* ===== Animations ===== */
+    @keyframes drawLogo {
+      0% { stroke-dashoffset: 300; }
+      40% { stroke-dashoffset: 0; }
+      60% { stroke-dashoffset: 0; }
+      100% { stroke-dashoffset: 300; }
+    }
+    @keyframes fadeLoop {
+      0% { opacity: 0; transform: translateY(-5px); }
+      40% { opacity: 1; transform: translateY(0); }
+      60% { opacity: 1; }
+      100% { opacity: 0; transform: translateY(-5px); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header>
+    <div class="logo">
+      <svg class="logo-drawing" width="30" height="30" viewBox="0 0 100 100" fill="none">
+        <path d="M10 80 L50 20 L90 80 Z" stroke="black" stroke-width="5" fill="transparent"/>
+      </svg>
+      <span class="logo-text">Connect</span>
+    </div>
+    <nav>
+      <ul>
+          <li><a href="/">Home</a></li>
+      
+       <li><a href="/student/logout">Log Out</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="layout">
+    <!-- ===== Sidebar ===== -->
+    <aside class="sidebar">
+      <div class="nav-section">
+        <h4>Navigation</h4>
+        <a href="/student/mainpage" class="nav-item"><i class="fa fa-home"></i> Dashboard</a>
+        <a href="/dashboard" class="nav-item active"><i class="fa fa-briefcase"></i> Recommendations</a>
+        
+        <a href="/student/resume" class="nav-item"><i class="fa fa-file"></i> Resume</a>
+      </div>
+
+      <div class="nav-section">
+        <h4>Applications</h4>
+        <a href="/student/applications" class="nav-item"><i class="fa fa-paper-plane"></i> My Applications</a>
+         <a href="/student/chats" class="nav-item "><i class="fa fa-comments"></i> Chats</a>
+      </div>
+
+      
+    </aside>
+
+    <!-- ===== Main Job Details ===== -->
+    <main>
+      <div class="job-container">
+        <h1><%= job.job_title %></h1>
+
+        <!-- Company Info -->
+        <div class="section">
+          <h2>Company Information</h2>
+          <p><strong>Name:</strong> <%= job.company_name %></p>
+          <p><strong>Email:</strong> <%= job.company_email %></p>
+          <p><strong>Website:</strong> <a href="<%= job.company_website %>" target="_blank"><%= job.company_website %></a></p>
+          <p><strong>Description:</strong> <%= job.company_description %></p>
+        </div>
+
+        <!-- Opportunity Info -->
+        <div class="section">
+          <h2>Opportunity Information</h2>
+          <p><strong>Type:</strong> <%= job.opportunity_type %></p>
+          <p><strong>Job Title:</strong> <%= job.job_title %></p>
+          <p><strong>Job Type:</strong> <%= job.job_type %></p>
+          <p><strong>Job Description:</strong> <%= job.job_description %></p>
+          <% if(job.salary_range) { %>
+            <p><strong>Salary Range:</strong> <%= job.salary_range %></p>
+          <% } %>
+          <% if(job.stipend_amount) { %>
+            <p><strong>Stipend Amount:</strong> <%= job.stipend_amount %></p>
+          <% } %>
+        </div>
+
+        <!-- Skills -->
+        <div class="section">
+          <h2>Skills Required</h2>
+          <% if(job.skills) { %>
+            <p><%= job.skills %></p>
+          <% } else { %>
+            <p>No specific skills mentioned.</p>
+          <% } %>
+        </div>
+
+        <!-- Work & Location -->
+        <div class="section">
+          <h2>Work & Location</h2>
+          <p><strong>Work Arrangement:</strong> <%= job.work_arrangement %></p>
+          <p><strong>Office Address:</strong> <%= job.office_address %></p>
+          <p><strong>Working Hours:</strong> <%= job.working_hours %></p>
+          <p><strong>Timezone:</strong> <%= job.timezone %></p>
+        </div>
+
+        <!-- Timeline -->
+        <div class="section">
+          <h2>Timeline</h2>
+          <p><strong>Application Deadline:</strong> <%= job.application_deadline %></p>
+          <p><strong>Start Date:</strong> <%= job.start_date %></p>
+        </div>
+
+        <!-- Apply Button -->
+        <form action="/apply/<%= job.id %>" method="POST">
+          <button type="submit" class="apply-btn">Apply Now</button>
+        </form>
+
+        <a href="/student/mainpage" class="back-link">← Back to Jobs</a>
+      </div>
+    </main>
+  </div>
+
+</body>
+</html>

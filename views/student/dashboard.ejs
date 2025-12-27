@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Job Recommendations</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Icons & Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #4361ee;
+      --secondary: #3a0ca3;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --transition: all 0.3s ease;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      background: #f5f7fa;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      background: white;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      animation: fadeInDown 1s ease;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .logo svg {
+      stroke-dasharray: 300;
+      stroke-dashoffset: 300;
+      animation: drawLogo 5s infinite;
+    }
+
+    .logo-text {
+      margin-left: 8px;
+      background: linear-gradient(to right, black, #444);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 12px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: black;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: var(--transition);
+    }
+
+    nav ul li a:hover {
+      background: #000;
+      color: #fff;
+    }
+
+    /* ===== LAYOUT ===== */
+    .layout {
+      display: flex;
+      flex: 1;
+    }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+      width: 240px;
+      background: white;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 15px rgba(0,0,0,0.08);
+    }
+
+    .nav-section {
+      margin-bottom: 20px;
+    }
+
+    .nav-section h4 {
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      margin-bottom: 6px;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #444;
+      transition: var(--transition);
+    }
+
+    .nav-item:hover {
+      background: #f0f5ff;
+      color: var(--primary);
+    }
+
+    .nav-item.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    .profile {
+      margin-top: auto;
+      padding: 10px;
+      background: #f9fafc;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .profile-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .profile-info img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+    }
+
+    .fa-bell {
+      color: gold;
+      animation: bell 2s infinite;
+    }
+
+    /* ===== MAIN ===== */
+    main {
+      flex: 1;
+      padding: 20px;
+      background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      animation: fadeInUp 1s ease;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes drawLogo {
+      0% { stroke-dashoffset: 300; }
+      50% { stroke-dashoffset: 0; }
+      100% { stroke-dashoffset: 300; }
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes bell {
+      0% { transform: rotate(0); }
+      50% { transform: rotate(10deg); }
+      100% { transform: rotate(0); }
+    }
+
+    @media(max-width:768px) {
+      .layout { flex-direction: column; }
+      .sidebar { width: 100%; flex-direction: row; overflow-x: auto; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="logo">
+    <svg width="30" height="30" viewBox="0 0 100 100">
+      <path d="M10 80 L50 20 L90 80 Z" stroke="black" stroke-width="5" fill="none"/>
+    </svg>
+    <span class="logo-text">Connect</span>
+  </div>
+
+  <nav>
+    <ul>
+        <li><a href="/">Home</a></li>
+      
+       <li><a href="/student/logout">Log Out</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="layout">
+
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar">
+  <div class="nav-section">
+    <h4>Navigation</h4>
+    <a href=" /student/mainpage" class="nav-item "><i class="fa fa-home"></i> Dashboard</a>
+    <a href="/dashboard" class="nav-item active"><i class="fa fa-briefcase"></i> Recommendations</a>
+    <a href="/student/resume" class="nav-item"><i class="fa fa-file"></i> Resume</a>
+  </div>
+
+  <div class="nav-section">
+    <h4>Applications</h4>
+    <a href="/student/applications" class="nav-item"><i class="fa fa-paper-plane"></i> My Applications</a>
+    <a href="/student/chats" class="nav-item"><i class="fa fa-comments"></i> Chats</a>
+  </div>
+
+  
+</aside>
+
+<!-- ===== MAIN CONTENT ===== -->
+<main>
+  <div class="container">
+    <h2>Recommended Jobs for You</h2>
+
+    <% if (error) { %>
+      <p style="color:red;"><%= error %></p>
+    <% } else if (jobs.length === 0) { %>
+      <p>No job recommendations found.</p>
+    <% } else { %>
+      <table>
+        <thead>
+          <tr>
+            <th>Job ID</th>
+            <th>Job Title</th>
+            <th>Match Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% jobs.forEach(job => { %>
+            <tr>
+              <td><%= job.id %></td>
+              <td><%= job.title %></td>
+              <td><%= job.score %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    <% } %>
+  </div>
+</main>
+
+</div>
+</body>
+</html>

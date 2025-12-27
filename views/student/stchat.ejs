@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat with Company</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4361ee;
+      --secondary: #3a0ca3;
+      --accent: #4cc9f0;
+      --dark: #212529;
+      --transition: all 0.3s ease;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; font-family: 'Poppins', sans-serif;}
+    body { display:flex; flex-direction:column; min-height:100vh; background:#f5f7fa; color: var(--dark); }
+
+    /* Header */
+    header { display:flex; justify-content:space-between; align-items:center; padding:15px 40px; background:white; box-shadow:0 4px 15px rgba(0,0,0,0.05); z-index:1000; }
+    header .logo { display:flex; align-items:center; font-size:1.5rem; font-weight:bold; color:black; }
+    header .logo svg { width:30px; height:30px; stroke-dasharray:300; stroke-dashoffset:300; animation: drawLogo 5s ease-in-out infinite; }
+    header .logo-text { margin-left:8px; background: linear-gradient(to right, black, #444); -webkit-background-clip:text; background-clip:text; color:transparent; font-weight:bold; }
+    header nav ul { list-style:none; display:flex; gap:12px; }
+    header nav ul li a { display:inline-block; color:black; padding:6px 12px; border-radius:6px; text-decoration:none; font-weight:500; transition:var(--transition); }
+    header nav ul li a:hover { background:#333; color:#fff; transform:translateY(-2px); }
+
+    /* Layout */
+    .layout { display:flex; flex:1; min-height: calc(100vh - 60px); }
+
+    /* Sidebar */
+    .sidebar { width:250px; background:white; padding:16px; display:flex; flex-direction:column; justify-content:flex-start; box-shadow:0 0 20px rgba(0,0,0,0.08); }
+    .nav-section { margin-bottom:20px; }
+    .nav-section h4 { font-size:12px; text-transform:uppercase; color:#888; margin-bottom:12px; letter-spacing:0.5px; }
+    .nav-item { display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:6px; color:#444; text-decoration:none; margin-bottom:6px; transition:all 0.2s; font-size:0.9rem; }
+    .nav-item:hover { background:#f0f5ff; color:#2255dd; }
+    .nav-item.active { background:#2255dd; color:white; }
+
+    /* Profile Section */
+    .sidebar .profile { margin-top:auto; display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border-radius:6px; background:#f8f9fa; cursor:pointer; transition:all 0.2s; }
+    .sidebar .profile:hover { background:#e2e6ea; }
+    .profile-info { display:flex; align-items:center; gap:10px; font-weight:500; color:#444; }
+    .profile-info img { width:32px; height:32px; border-radius:50%; object-fit:cover; }
+
+    /* Main Chat */
+    main { flex:1.5; padding:20px; overflow-y:auto; display:flex; flex-direction:column; }
+    .chat-container { background:white; border-radius:12px; padding:25px; max-width:1200px; margin:auto; box-shadow:0 10px 30px rgba(0,0,0,0.1); display:flex; flex-direction:column; gap:10px; }
+    .chat-message { padding:10px 15px; border-radius:15px; max-width:70%; word-wrap:break-word; }
+    .chat-message.student { align-self:flex-end; background:var(--primary); color:white; border-bottom-right-radius:0; }
+    .chat-message.company { align-self:flex-start; background:#f1f1f1; color:#333; border-bottom-left-radius:0; }
+    #chatBox { display:flex; flex-direction:column; gap:8px; max-height:400px; overflow-y:auto; margin-bottom:15px; width: 900px; }
+    #messageInput { flex:1; padding:10px 12px; border-radius:8px; border:1px solid #ccc; font-size:1rem; }
+    #sendBtn { padding:10px 15px; border:none; background:var(--primary); color:white; border-radius:8px; cursor:pointer; font-weight:500; }
+    #sendBtn:hover { background:var(--secondary); }
+
+    /* Footer */
+    footer { background:white; padding:15px 40px; text-align:center; box-shadow:0 -4px 15px rgba(0,0,0,0.05); margin-top:auto; }
+    footer p { color:#444; font-size:14px; margin:0; }
+    footer div a { margin:0 10px; color:var(--primary); text-decoration:none; }
+
+    /* Animations */
+    @keyframes drawLogo { 0%{stroke-dashoffset:300;} 40%,60%{stroke-dashoffset:0;} 100%{stroke-dashoffset:300;} }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <svg viewBox="0 0 100 100" fill="none">
+        <path d="M10 80 L50 20 L90 80 Z" stroke="black" stroke-width="5" fill="transparent"/>
+      </svg>
+      <span class="logo-text">Connect</span>
+    </div>
+    <nav>
+      <ul>
+         <li><a href="/">Home</a></li>
+      
+       <li><a href="/student/logout">Log Out</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="nav-section">
+        <h4>Navigation</h4>
+         <a href=" /student/mainpage" class="nav-item "><i class="fa fa-home"></i> Dashboard</a>
+    <a href="/dashboard" class="nav-item"><i class="fa fa-briefcase"></i> Recommendations</a>
+    <a href="/student/resume" class="nav-item"><i class="fa fa-file"></i> Resume</a>
+      </div>
+
+      <div class="nav-section">
+        <h4>Applications</h4>
+        <a href="/student/applications" class="nav-item"><i class="fa fa-paper-plane"></i> My Applications</a>
+        <a href="/student/chats" class="nav-item active"><i class="fa fa-comments"></i> Chats</a>
+      </div>
+
+      <!-- Profile -->
+     
+    </aside>
+
+    <!-- Chat Main -->
+    <main>
+      <div class="chat-container">
+        <h2>💬 Chat with Company</h2>
+        <div id="chatBox">
+          <% messages.forEach(msg => { %>
+            <div class="chat-message <%= msg.sender === 'student' ? 'student' : 'company' %>">
+              <b><%= msg.sender %>:</b> <%= msg.message %>
+              <small> (<%= new Date(msg.created_at).toLocaleTimeString() %>)</small>
+            </div>
+          <% }) %>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <input type="text" id="messageInput" placeholder="Type a message..."/>
+          <button id="sendBtn">Send</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+ 
+
+  <!-- Socket.IO -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+    const studentId = "<%= studentId %>";
+    const companyId = "<%= companyId %>";
+    socket.emit('joinRoom', { studentId, companyId });
+
+    const chatBox = document.getElementById('chatBox');
+
+    document.getElementById('sendBtn').onclick = () => {
+      const message = document.getElementById('messageInput').value.trim();
+      if(!message) return;
+
+      socket.emit('sendMessage', { studentId, companyId, sender:'student', message });
+      document.getElementById('messageInput').value = '';
+    }
+
+    socket.on('receiveMessage', (data) => {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `chat-message ${data.sender === 'student' ? 'student' : 'company'}`;
+      msgDiv.innerHTML = `<b>${data.sender}:</b> ${data.message} <small>(${new Date(data.timestamp).toLocaleTimeString()})</small>`;
+      chatBox.appendChild(msgDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    });
+  </script>
+</body>
+</html>

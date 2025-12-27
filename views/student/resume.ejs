@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume Builder with Header & Sidebar</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4361ee;
+      --secondary: #3a0ca3;
+      --accent: #4cc9f0;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --success: #4CAF50;
+      --warning: #ffb703;
+      --danger: #e63946;
+      --gray: #6c757d;
+      --transition: all 0.3s ease;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background: #f5f7fa;
+      color: var(--dark);
+    }
+
+    /* ===== Header ===== */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      background: white;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      animation: fadeInDown 1s ease;
+      z-index: 1000;
+    }
+    header .logo { display: flex; align-items: center; font-size: 1.8rem; font-weight: bold; color: black; }
+    header .logo svg { stroke-dasharray: 300; stroke-dashoffset: 300; animation: drawLogo 5s ease-in-out infinite; }
+    header .logo-text {
+      margin-left: 10px;
+      background: linear-gradient(to right, black, #444);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: bold;
+      animation: fadeLoop 25s ease-in-out infinite;
+    }
+    header nav ul { list-style: none; display: flex; gap: 15px; }
+    header nav ul li a {
+      display: inline-block;
+      color: black;
+      padding: 8px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+    header nav ul li a:hover {
+      background: #333;
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    /* ===== Layout ===== */
+    .layout {
+      display: flex;
+      flex: 1;
+      min-height: calc(100vh - 80px);
+    }
+
+    /* ===== Sidebar ===== */
+    .sidebar {
+      width: 280px;
+      background: white;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      box-shadow: 0 0 20px rgba(0,0,0,0.08);
+    }
+    .nav-section h4 {
+      font-size: 14px;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 16px;
+      letter-spacing: 0.5px;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      color: #444;
+      text-decoration: none;
+      margin-bottom: 6px;
+      transition: all 0.2s;
+    }
+    .nav-item:hover { background: #f0f5ff; color: #2255dd; }
+    .nav-item.active { background: #2255dd; color: white; }
+
+    /* ===== Quick Stats ===== */
+    .stat {
+      background: #f9fafc;
+      border-radius: 10px;
+      padding: 12px;
+      margin: 8px 0;
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #333;
+      box-shadow: 0 2px 6px rgba(0,0,0,.1);
+      animation: fadeInUp .6s ease forwards;
+      opacity: 0;
+    }
+    .stat span { font-weight: 700; }
+    .stat.green { border-left: 4px solid #4CAF50; }
+    .stat.blue  { border-left: 4px solid #2196F3; }
+    .stat.orange{ border-left: 4px solid #FF9800; }
+
+    /* ===== Profile ===== */
+    .profile {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      background: #f9fafc;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,.1);
+    }
+    .profile-info {
+      display: flex;
+      align-items: center;
+    }
+    .profile-info img {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    .profile .fa-bell {
+      font-size: 18px;
+      color: #FFD700;
+      animation: fadeLoop 3s infinite;
+    }
+
+    /* ===== Main Content (Resume Form) ===== */
+    main {
+      flex: 1;
+      padding: 30px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      overflow-y: auto;
+    }
+    .form-container {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      max-width: 900px;
+      margin: auto;
+      animation: fadeInUp 1s ease;
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--primary);
+      margin: 20px 0 15px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid var(--accent);
+    }
+    .form-group { margin-bottom: 20px; }
+    label { display: block; margin-bottom: 6px; font-weight: 500; color: var(--dark); }
+    input, textarea {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #e1e5eb;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(76, 201, 240, 0.3);
+    }
+    textarea { resize: vertical; min-height: 100px; }
+    .btn-group { display: flex; gap: 15px; margin-top: 20px; }
+    button {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--secondary); transform: translateY(-2px); }
+
+    /* ===== Animations ===== */
+    @keyframes drawLogo {
+      0%   { stroke-dashoffset: 300; }
+      40%  { stroke-dashoffset: 0; }
+      60%  { stroke-dashoffset: 0; }
+      100% { stroke-dashoffset: 300; }
+    }
+    @keyframes fadeLoop {
+      0%   { opacity: 0; transform: translateY(-5px); }
+      40%  { opacity: 1; transform: translateY(0); }
+      60%  { opacity: 1; }
+      100% { opacity: 0; transform: translateY(-5px); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header>
+    <div class="logo">
+      <svg class="logo-drawing" width="40" height="40" viewBox="0 0 100 100" fill="none">
+        <path d="M10 80 L50 20 L90 80 Z" stroke="black" stroke-width="5" fill="transparent"/>
+      </svg>
+      <span class="logo-text">Connect</span>
+    </div>
+    <nav>
+      <ul>
+            <li><a href="/">Home</a></li>
+      
+       <li><a href="/student/logout">Log Out</a></li>
+      </ul>
+    </nav>
+  </header>
+  <h6>hello</h6>
+
+  <div class="layout">
+    <!-- ===== Sidebar ===== -->
+    <aside class="sidebar">
+      <div class="nav-section">
+        <h4>Navigation</h4>
+              <a href=" /student/mainpage" class="nav-item "><i class="fa fa-home"></i> Dashboard</a>
+    <a href="/dashboard" class="nav-item"><i class="fa fa-briefcase"></i> Recommendations</a>
+    <a href="/student/resume" class="nav-item"><i class="fa fa-file"></i> Resume</a>
+      </div>
+
+      <div class="nav-section">
+        <h4>Applications</h4>
+        <a href="/student/applications" class="nav-item"><i class="fa fa-paper-plane"></i> My Applications</a>
+         <a href="/student/chats" class="nav-item "><i class="fa fa-comments"></i> Chats</a>
+      </div>
+
+     
+    </aside>
+
+    <!-- ===== Main Resume Form ===== -->
+    <main>
+      <div class="form-container">
+        <h2 class="section-title"><i class="fas fa-pencil-alt"></i> Enter Your Details</h2>
+        <form id="resumeForm" method="POST" action="/student/resumepost">
+          <!-- Personal Info -->
+          <div class="form-group">
+            <label for="fullName">Full Name *</label>
+            <input type="text" id="fullName" name="fullName" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" value="<%= email %>" required>
+          </div>
+          <div class="form-group">
+            <label for="jobTitle">Professional Title *</label>
+            <input type="text" id="jobTitle" name="jobTitle" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone">
+          </div>
+          <div class="form-group">
+            <label for="location">Location</label>
+            <input type="text" id="location" name="location">
+          </div>
+          <div class="form-group">
+            <label for="linkedin">LinkedIn</label>
+            <input type="url" id="linkedin" name="linkedin">
+          </div>
+
+          <!-- Education -->
+          <h2 class="section-title"><i class="fas fa-graduation-cap"></i> Education</h2>
+          <div class="form-group">
+            <label for="school">School/University</label>
+            <input type="text" id="school" name="school">
+          </div>
+          <div class="form-group">
+            <label for="degree">Degree</label>
+            <input type="text" id="degree" name="degree">
+          </div>
+          <div class="form-group">
+            <label for="gradYear">Graduation Year</label>
+            <input type="number" id="gradYear" name="gradYear">
+          </div>
+
+          <!-- Work Experience -->
+          <h2 class="section-title"><i class="fas fa-building"></i> Work Experience</h2>
+          <div class="form-group">
+            <label for="company">Company</label>
+            <input type="text" id="company" name="company">
+          </div>
+          <div class="form-group">
+            <label for="jobTitleWork">Job Title</label>
+            <input type="text" id="jobTitleWork" name="jobTitleWork">
+          </div>
+          <div class="form-group">
+            <label for="workDate">Date Range</label>
+            <input type="text" id="workDate" name="workDate">
+          </div>
+          <div class="form-group">
+            <label for="workDescription">Description</label>
+            <textarea id="workDescription" name="workDescription"></textarea>
+          </div>
+
+          <!-- Skills -->
+          <h2 class="section-title"><i class="fas fa-star"></i> Skills</h2>
+          <div class="form-group">
+            <label for="skills">List your skills (comma separated)</label>
+            <input type="text" id="skills" name="skills">
+          </div>
+
+          <!-- Summary -->
+          <h2 class="section-title"><i class="fas fa-file-alt"></i> Summary</h2>
+          <div class="form-group">
+            <label for="summary">Professional Summary</label>
+            <textarea id="summary" name="summary"></textarea>
+          </div>
+
+          <div class="btn-group">
+            <button type="submit" class="btn-primary"><i class="fas fa-save"></i> Save Resume</button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+</body>
+</html>

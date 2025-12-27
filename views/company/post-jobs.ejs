@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Post a Job Opportunity | Connect</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Animate.css -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+  <style>
+    :root {
+      --primary: #4361ee;
+      --secondary: #3a0ca3;
+      --accent: #4cc9f0;
+      --light: #f8f9fa;
+      --dark: #212529;
+      --transition: all 0.3s ease;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background: #f5f7fa;
+      color: var(--dark);
+    }
+
+    /* ===== Header ===== */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      background: white;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      animation: fadeInDown 1s ease;
+      z-index: 1000;
+    }
+    header .logo { display: flex; align-items: center; font-size: 1.8rem; font-weight: bold; color: black; }
+    header .logo svg { stroke-dasharray: 300; stroke-dashoffset: 300; animation: drawLogo 5s ease-in-out infinite; }
+    header .logo-text {
+      margin-left: 10px;
+      background: linear-gradient(to right, black, #444);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: bold;
+    }
+    header nav ul { list-style: none; display: flex; gap: 15px; }
+    header nav ul li a {
+      display: inline-block;
+      color: black;
+      padding: 8px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+    header nav ul li a:hover {
+      background: #333;
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    /* ===== Layout ===== */
+    .layout {
+      display: flex;
+      flex: 1;
+      min-height: calc(100vh - 80px);
+    }
+
+    /* ===== Sidebar ===== */
+    .sidebar {
+      width: 280px;
+      background: white;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      box-shadow: 0 0 20px rgba(0,0,0,0.08);
+    }
+    .nav-section h4 {
+      font-size: 14px;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 16px;
+      letter-spacing: 0.5px;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      color: #444;
+      text-decoration: none;
+      margin-bottom: 6px;
+      transition: all 0.2s;
+    }
+    .nav-item:hover { background: #f0f5ff; color: #2255dd; }
+    .nav-item.active { background: #2255dd; color: white; }
+
+    .profile {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      background: #f9fafc;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,.1);
+    }
+    .profile-info {
+      display: flex;
+      align-items: center;
+    }
+    .profile-info img {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    .profile .fa-bell {
+      font-size: 18px;
+      color: #FFD700;
+    }
+
+    /* ===== Main Content ===== */
+    main {
+      flex: 1;
+      padding: 30px;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      overflow-y: auto;
+    }
+
+    .job-form-container {
+      max-width: 900px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      animation: fadeInUp 1s ease;
+    }
+    .form-header {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #2c3e50;
+      border-bottom: 2px solid #3498db;
+      padding-bottom: 10px;
+    }
+    .form-section {
+      margin-bottom: 25px;
+      padding: 20px;
+      background-color: #f8f9fa;
+      border-radius: 8px;
+    }
+    .form-section h3 {
+      color: #3498db;
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+    }
+    .btn-submit {
+      background-color: #3498db;
+      color: white;
+      padding: 10px 25px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+    .btn-submit:hover {
+      background-color: #2980b9;
+      transform: translateY(-2px);
+    }
+
+    footer {
+      background: #2c3e50;
+      color: #fff;
+      text-align: center;
+      padding: 15px;
+      margin-top: auto;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes drawLogo {
+      0%   { stroke-dashoffset: 300; }
+      40%  { stroke-dashoffset: 0; }
+      60%  { stroke-dashoffset: 0; }
+      100% { stroke-dashoffset: 300; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header>
+    <div class="logo">
+      <svg class="logo-drawing" width="40" height="40" viewBox="0 0 100 100" fill="none">
+        <path d="M10 80 L50 20 L90 80 Z" stroke="black" stroke-width="5" fill="transparent"/>
+      </svg>
+      <span class="logo-text">Connect</span>
+    </div>
+    <nav>
+      <ul>
+    
+         <li><a href="/">Home</a></li>
+        <li><a href="/company/logout">Log Out</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="layout">
+    <!-- ===== Sidebar ===== -->
+    <aside class="sidebar">
+      <div class="nav-section">
+        <h4>Navigation</h4>
+        <a href="/company/postjob" class="nav-item active"><i class="fa fa-home"></i> Post-jobs</a>
+        <a href="/company/posted" class="nav-item"><i class="fa fa-briefcase"></i> Posted</a>
+      
+
+      </div>
+
+      <div class="nav-section">
+        <h4>Applications</h4>
+        <a href="/company/applications" class="nav-item"><i class="fa fa-paper-plane"></i>  Applications</a>
+        <a href="/company/chat_list" class="nav-item"><i class="fa fa-comments"></i> Chats</a>
+      </div>
+
+      <div class="profile">
+        <div class="profile-info">
+          <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="profile">
+           <a href="/company">  PROFILE</a>
+        </div>
+        <i class="fa fa-bell"></i>
+      </div>
+    </aside>
+
+    <!-- ===== Main Job Posting Form ===== -->
+    <main>
+      <div class="job-form-container">
+        <div class="form-header">
+          <h2><i class="fas fa-briefcase me-2"></i> Post a Job Opportunity</h2>
+          <p class="text-muted">Fill out the form below to list your job or internship opportunity</p>
+        </div>
+
+        <form action="/jobs/post" method="POST">
+          <!-- Company Information Section -->
+          <div class="form-section">
+            <h3><i class="fas fa-building me-2"></i> Company Information</h3>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label">Company Name *</label>
+                <input type="text" class="form-control" name="companyName" value="<%= companyName %>" readonly required/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Company Email *</label>
+                <input type="email" class="form-control" name="companyEmail" value="<%= companyEmail %>" readonly required/>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Company Website</label>
+              <input type="url" class="form-control" name="companyWebsite" placeholder="https://" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Company Description *</label>
+              <textarea class="form-control" name="companyDescription" rows="3" required></textarea>
+            </div>
+          </div>
+
+          <!-- Opportunity Type Section -->
+          <div class="form-section">
+            <h3><i class="fas fa-tasks me-2"></i> Opportunity Type</h3>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <div class="form-check">
+                  <input class="form-check-input opportunity-type" type="radio" name="opportunityType" id="jobOffered" value="job" required />
+                  <label class="form-check-label" for="jobOffered">Job Position</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input opportunity-type" type="radio" name="opportunityType" id="internshipOffered" value="internship" />
+                  <label class="form-check-label" for="internshipOffered">Internship</label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div id="stipendField" style="display: none;">
+                  <label class="form-label">Stipend Amount</label>
+                  <input type="text" class="form-control" name="stipendAmount" placeholder="e.g., ₹10,000 per month" />
+                </div>
+                <div id="salaryField" style="display: none;">
+                  <label class="form-label">Salary Range</label>
+                  <input type="text" class="form-control" name="salaryRange" placeholder="e.g., ₹25,000 - ₹35,000 per month" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Position Details Section -->
+          <div class="form-section">
+            <h3><i class="fas fa-info-circle me-2"></i> Position Details</h3>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label">Position Title *</label>
+                <input type="text" class="form-control" name="jobTitle" required />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Position Type *</label>
+                <select class="form-select" name="jobType" required>
+                  <option value="" selected disabled>Select type</option>
+                  <option value="full-time">Full-time</option>
+                  <option value="part-time">Part-time</option>
+                  <option value="contract">Contract</option>
+                  <option value="temporary">Temporary</option>
+                  <option value="internship">Internship</option>
+                </select>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Position Description *</label>
+              <textarea class="form-control" name="jobDescription" rows="5" required></textarea>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Skills Required</label>
+              <input type="text" class="form-control" name="skills" placeholder="Comma separated skills, e.g., JavaScript, Python" />
+            </div>
+          </div>
+
+          <!-- Work Arrangement Section -->
+          <div class="form-section">
+            <h3><i class="fas fa-laptop-house me-2"></i> Work Arrangement</h3>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label">Work Location *</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="workArrangement" value="office" required />
+                  <label class="form-check-label">Work from Office</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="workArrangement" value="home" />
+                  <label class="form-check-label">Work from Home</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="workArrangement" value="hybrid" />
+                  <label class="form-check-label">Hybrid (Office + Home)</label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Office Address (if applicable)</label>
+                <textarea class="form-control" name="officeAddress" rows="2"></textarea>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label">Working Hours</label>
+                <input type="text" class="form-control" name="workingHours" placeholder="e.g., 9:00 AM - 5:00 PM" />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Timezone (if remote)</label>
+                <select class="form-select" name="timezone">
+                  <option value="" selected disabled>Select timezone</option>
+                  <option value="IST">IST (Indian Standard Time)</option>
+                  <option value="EST">EST (Eastern Standard Time)</option>
+                  <option value="PST">PST (Pacific Standard Time)</option>
+                  <option value="GMT">GMT (Greenwich Mean Time)</option>
+                  <option value="CET">CET (Central European Time)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Application Details Section -->
+          <div class="form-section">
+            <h3><i class="fas fa-clipboard-check me-2"></i> Application Details</h3>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label class="form-label">Application Deadline</label>
+                <input type="date" class="form-control" name="applicationDeadline" />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Expected Start Date</label>
+                <input type="date" class="form-control" name="startDate" />
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Contact Email *</label>
+              <input type="email" class="form-control" name="contactEmail" value="<%= companyEmail %>" readonly required/>
+            </div>
+          </div>
+
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-submit">
+              <i class="fas fa-paper-plane me-2"></i> Post Opportunity
+            </button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 <a href="/">Connect</a>. All rights reserved.</p>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+ <script>
+    // Toggle stipend/salary fields based on opportunity type
+    const jobRadio = document.getElementById('jobOffered');
+    const internshipRadio = document.getElementById('internshipOffered');
+    const stipendField = document.getElementById('stipendField');
+    const salaryField = document.getElementById('salaryField');
+
+    function togglePayFields() {
+      if (jobRadio.checked) {
+        salaryField.style.display = 'block';
+        stipendField.style.display = 'none';
+      } else if (internshipRadio.checked) {
+        stipendField.style.display = 'block';
+        salaryField.style.display = 'none';
+      } else {
+        stipendField.style.display = 'none';
+        salaryField.style.display = 'none';
+      }
+    }
+
+    jobRadio.addEventListener('change', togglePayFields);
+    internshipRadio.addEventListener('change', togglePayFields);
+    window.addEventListener('load', togglePayFields);
+  </script>
+
+  </body>
+  </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

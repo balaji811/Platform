@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat with Student | Connect</title>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #4361ee;
+      --secondary: #3a0ca3;
+      --accent: #4cc9f0;
+      --dark: #212529;
+      --transition: all 0.3s ease;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Poppins', sans-serif; background: #f5f7fa; color: var(--dark); display: flex; flex-direction: column; min-height: 100vh; }
+
+    /* ===== Header ===== */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      background: white;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      z-index: 1000;
+    }
+    header .logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: black;
+    }
+    header .logo svg {
+      stroke-dasharray: 300;
+      stroke-dashoffset: 300;
+      animation: drawLogo 5s ease-in-out infinite;
+    }
+    header .logo-text {
+      margin-left: 10px;
+      background: linear-gradient(to right, black, #444);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: bold;
+    }
+    header nav ul {
+      list-style: none;
+      display: flex;
+      gap: 15px;
+    }
+    header nav ul li a {
+      display: inline-block;
+      color: black;
+      padding: 8px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+    header nav ul li a:hover {
+      background: #333;
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    /* ===== Layout ===== */
+    .layout { display: flex; flex: 1; min-height: calc(100vh - 80px); }
+
+    /* ===== Sidebar ===== */
+    .sidebar {
+      width: 280px;
+      background: white;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      box-shadow: 0 0 20px rgba(0,0,0,0.08);
+    }
+    .nav-section h4 {
+      font-size: 14px;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 16px;
+      letter-spacing: 0.5px;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      color: #444;
+      text-decoration: none;
+      margin-bottom: 6px;
+      transition: all 0.2s;
+    }
+    .nav-item:hover { background: #f0f5ff; color: #2255dd; }
+    .nav-item.active { background: #2255dd; color: white; }
+
+    .profile {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px;
+      background: #f9fafc;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,.1);
+    }
+    .profile-info {
+      display: flex;
+      align-items: center;
+    }
+    .profile-info img {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+    .profile .fa-bell {
+      font-size: 18px;
+      color: #FFD700;
+    }
+
+    /* ===== Main Content ===== */
+    main {
+      flex: 1;
+      padding: 30px;
+      overflow-y: auto;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      max-width: 800px;
+      margin: auto;
+    }
+    h2 { margin-bottom: 20px; color: var(--primary); }
+
+    /* ===== Chat Styles ===== */
+    .chat-box {
+      border: 1px solid #ccc;
+      padding: 10px;
+      height: 400px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      border-radius: 10px;
+    }
+
+    .message {
+      max-width: 70%;
+      padding: 10px 15px;
+      border-radius: 20px;
+      position: relative;
+      word-wrap: break-word;
+      border: 1px solid #ccc;
+      background: white;
+    }
+
+    .message.sent { align-self: flex-end; border-bottom-right-radius: 0; }
+    .message.received { align-self: flex-start; border-bottom-left-radius: 0; }
+
+    .message .sender {
+      font-size: 0.7rem;
+      opacity: 0.7;
+      margin-top: 5px;
+      display: block;
+      text-align: right;
+    }
+
+    .chat-input {
+      display: flex;
+      margin-top: 10px;
+      gap: 10px;
+    }
+
+    #messageInput {
+      flex: 1;
+      padding: 10px 15px;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+      outline: none;
+    }
+
+    #sendBtn {
+      padding: 10px 20px;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+      background: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    #sendBtn:hover { background: #f0f0f0; }
+
+    @keyframes drawLogo { 0% { stroke-dashoffset: 300; } 40%,60% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 300; } }
+  </style>
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header>
+    <div class="logo">
+      <svg class="logo-drawing" width="40" height="40" viewBox="0 0 100 100" fill="none">
+        <path d="M10 80 L50 20 L90 80 Z" stroke="black" stroke-width="5" fill="transparent"/>
+      </svg>
+      <span class="logo-text">Connect</span>
+    </div>
+    <nav>
+      <ul>
+          <li><a href="/">Home</a></li>
+        <li><a href="/company/logout">Log Out</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="layout">
+    <!-- ===== Sidebar ===== -->
+    <aside class="sidebar">
+      <div class="nav-section">
+        <h4>Navigation</h4>
+        <a href="/company/postjob" class="nav-item"><i class="fa fa-home"></i> Post-jobs</a>
+        <a href="/company/posted" class="nav-item"><i class="fa fa-briefcase"></i> Posted</a>
+       
+      </div>
+      <div class="nav-section">
+        <h4>Applications</h4>
+        <a href="/company/applications" class="nav-item"><i class="fa fa-paper-plane"></i> Applications</a>
+        <a href="/company/chat_list" class="nav-item active"><i class="fa fa-comments"></i> Chats</a>
+      </div>
+      <div class="profile">
+        <div class="profile-info">
+          <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="profile">
+          <a href="/company">PROFILE</a>
+        </div>
+        <i class="fa fa-bell"></i>
+      </div>
+    </aside>
+
+    <!-- ===== Main Content ===== -->
+    <main>
+      <div class="container">
+        <h2>💬 Chat with Student</h2>
+
+        <div id="chatBox" class="chat-box">
+          <% messages.forEach(msg => { %>
+            <div class="message <%= msg.sender === 'company' ? 'sent' : 'received' %>">
+              <p><%= msg.message %></p>
+              <span class="sender"><%= msg.sender %></span>
+            </div>
+          <% }) %>
+        </div>
+
+        <div class="chat-input">
+          <input type="text" id="messageInput" placeholder="Type a message..." />
+          <button id="sendBtn">Send</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+    const companyId = "<%= companyId %>";
+    const studentId = "<%= studentId %>";
+
+    // Join room
+    socket.emit('joinRoom', { studentId, companyId });
+
+    const chatBox = document.getElementById('chatBox');
+
+    // Send message
+    document.getElementById('sendBtn').onclick = () => {
+      const messageInput = document.getElementById('messageInput');
+      const message = messageInput.value.trim();
+      if (!message) return;
+
+      socket.emit('sendMessage', { studentId, companyId, sender: 'company', message });
+
+      // Display locally
+      const msgDiv = document.createElement('div');
+      msgDiv.classList.add('message', 'sent');
+      msgDiv.innerHTML = `<p>${message}</p><span class="sender">company</span>`;
+      chatBox.appendChild(msgDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+
+      messageInput.value = '';
+    };
+
+    // Receive messages
+    socket.on('receiveMessage', (data) => {
+      const msgDiv = document.createElement('div');
+      msgDiv.classList.add('message', data.sender === 'company' ? 'sent' : 'received');
+      msgDiv.innerHTML = `<p>${data.message}</p><span class="sender">${data.sender}</span>`;
+      chatBox.appendChild(msgDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    });
+  </script>
+</body>
+</html>

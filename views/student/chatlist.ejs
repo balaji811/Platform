@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Chats</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4361ee;
+      --secondary: #3a0ca3;
+      --accent: #4cc9f0;
+      --dark: #212529;
+      --transition: all 0.3s ease;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Poppins', sans-serif; background: #f5f7fa; color: var(--dark); display: flex; flex-direction: column; min-height: 100vh; }
+
+    /* ===== Header (smaller) ===== */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 40px;
+      background: white;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      z-index: 1000;
+    }
+    header .logo { display: flex; align-items: center; font-size: 1.5rem; font-weight: bold; color: black; }
+    header .logo svg { stroke-dasharray: 300; stroke-dashoffset: 300; animation: drawLogo 5s ease-in-out infinite; width:30px; height:30px; }
+    header .logo-text { margin-left: 8px; background: linear-gradient(to right, black, #444); -webkit-background-clip: text; background-clip: text; color: transparent; font-weight: bold; animation: fadeLoop 25s ease-in-out infinite; font-size:1.3rem; }
+    header nav ul { list-style: none; display: flex; gap: 12px; }
+    header nav ul li a { display: inline-block; color: black; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; transition: var(--transition); font-size: 0.9rem; }
+    header nav ul li a:hover { background: #333; color: #fff; transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+
+    /* ===== Layout ===== */
+    .layout { display: flex; flex: 1; min-height: calc(100vh - 60px); }
+
+    /* ===== Sidebar (smaller) ===== */
+    .sidebar { width: 250px; padding: 16px; background: white; display: flex; flex-direction: column; justify-content: flex-start; box-shadow: 0 0 20px rgba(0,0,0,0.08); }
+    .nav-section h4 { font-size: 12px; text-transform: uppercase; color: #888; margin-bottom: 12px; letter-spacing: 0.5px; }
+    .nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 6px; color: #444; text-decoration: none; margin-bottom: 6px; transition: all 0.2s; font-size: 0.9rem; }
+    .nav-item:hover { background: #f0f5ff; color: #2255dd; }
+    .nav-item.active { background: #2255dd; color: white; }
+
+    /* ===== Main Content ===== */
+    main { flex: 1; padding: 30px; overflow-y: auto; }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      max-width: 800px;
+      margin: auto;
+    }
+    h2 { margin-bottom: 20px; color: var(--primary); }
+    ul { list-style: none; padding-left: 0; }
+    li { margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; padding: 12px; border-radius: 8px; background: #f9fafc; }
+    li.no-chats { text-align: center; color: #888; }
+    a { text-decoration: none; color: var(--primary); font-weight: 500; }
+    a:hover { text-decoration: underline; }
+
+    /* ===== Footer ===== */
+    footer {
+      background: white;
+      padding: 20px 60px;
+      text-align: center;
+      box-shadow: 0 -4px 15px rgba(0,0,0,0.05);
+    }
+    footer p { color: #444; font-size: 14px; margin: 0; }
+    footer div a { margin: 0 10px; color: var(--primary); }
+
+    /* ===== Animations ===== */
+    @keyframes drawLogo { 0% { stroke-dashoffset: 300; } 40%,60% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: 300; } }
+    @keyframes fadeLoop { 0% { opacity: 0; transform: translateY(-5px); } 40%,60% { opacity: 1; transform: translateY(0); } 100% { opacity: 0; transform: translateY(-5px); } }
+  </style>
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header>
+    <div class="logo">
+      <svg class="logo-drawing" viewBox="0 0 100 100" fill="none">
+        <path d="M10 80 L50 20 L90 80 Z" stroke="black" stroke-width="5" fill="transparent"/>
+      </svg>
+      <span class="logo-text">Connect</span>
+    </div>
+    <nav>
+      <ul>
+         <li><a href="/">Home</a></li>
+      
+       <li><a href="/student/logout">Log Out</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="layout">
+    <!-- ===== Sidebar ===== -->
+    <aside class="sidebar">
+      <div class="nav-section">
+        <h4>Navigation</h4>
+         <a href=" /student/mainpage" class="nav-item "><i class="fa fa-home"></i> Dashboard</a>
+      <a href="/dashboard" class="nav-item"><i class="fa fa-briefcase"></i> Recommendations</a>
+       <a href="/student/resume" class="nav-item"><i class="fa fa-file"></i> Resume</a>
+      </div>
+      <div class="nav-section">
+        <h4>Applications</h4>
+        <a href="/student/applications" class="nav-item"><i class="fa fa-paper-plane"></i> My Applications</a>
+         <a href="/student/chats" class="nav-item active"><i class="fa fa-comments"></i> Chats</a>
+      </div>
+    </aside>
+
+    <!-- ===== Main Content ===== -->
+    <main>
+      <div class="container">
+        <h2>💬 Companies You Chatted With</h2>
+        <ul>
+          <% if (companies.length > 0) { %>
+            <% companies.forEach(company => { %>
+              <li>
+                <span class="company-name"><%= company.company_name %></span>
+                <a href="/student/chat/<%= company.id %>">Open Chat</a>
+              </li>
+            <% }) %>
+          <% } else { %>
+            <li class="no-chats">No active chats yet.</li>
+          <% } %>
+        </ul>
+      </div>
+    </main>
+  </div>
+
+  
+
+</body>
+</html>
